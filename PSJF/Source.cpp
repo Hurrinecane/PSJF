@@ -31,6 +31,7 @@ private:
 
 	Process* process_mas = new Process[mas_length];
 
+private:
 	Process* resize(Process* process_mas, int OldSize, int NewSize)
 	{
 		if (OldSize > NewSize)
@@ -96,9 +97,12 @@ public:
 			run_process = 0;
 			for (int i = 0; i < numberOfProcesses; i++)
 			{
-				if (j >= process_mas[i].enter_time && process_mas[i].running_time < process_mas[i].time)
+				if (j >= process_mas[i].enter_time && process_mas[i].running_time < process_mas[i].time)	//Если процесс добавился и еще не завершился
 					if (process_mas[run_process].running_time == process_mas[run_process].time || process_mas[i].time - process_mas[i].running_time < process_mas[run_process].time - process_mas[run_process].running_time)
+					{
+						processor_time[run_process][j] = 0;
 						run_process = i;
+					}
 					else processor_time[i][j] = 0;
 			}
 			processor_time[run_process][j] = 1;
@@ -158,7 +162,6 @@ int main()
 {
 	setlocale(0, "");
 	Processor CPU;
-	CPU.AddProcess();
 	CPU.AddProcess();
 	CPU.AddProcess();
 	CPU.AddProcess();
